@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interrupción de la sesión en una cirugía robótica a distancia</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--g:#1d5a3c;--g2:#3b7d5a;--g3:#00873f;--bg:#fcfafa;--t:#222}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:#111;font-family:Montserrat,Arial,sans-serif;color:var(--t)}
+#deck{position:relative;width:100%;height:100%}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;padding:6vh 8vw 8vh 10vw;background:var(--bg);overflow:auto}
+.slide.on{display:flex}
+.slide::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5vw;background:var(--g)}
+h1,h2{color:var(--g);font-weight:800;line-height:1.15;margin-bottom:3vh}
+h1{font-size:clamp(1.8rem,5vw,3.4rem);text-transform:uppercase}
+h2{font-size:clamp(1.5rem,3.6vw,2.6rem)}
+p,li{font-size:clamp(.95rem,1.7vw,1.3rem);font-weight:600;line-height:1.55}
+ul,ol{padding-left:1.4em}li{margin-bottom:1.2vh}
+.tag{display:inline-block;background:var(--g);color:#fff;border-radius:8px;padding:.4em .9em;font-weight:400;margin-bottom:2.5vh}
+.meta p{font-weight:400;color:var(--g)}.meta b{font-weight:800}
+.band{background:var(--g);color:#fff;padding:3vh 3vw;text-align:center;margin-bottom:3vh}
+.band h2{color:#fff;margin:0}
+.grid{display:grid;gap:1.5vw;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin:2vh 0}
+.card{background:var(--g2);color:#fff;border-radius:14px;padding:2.2vh 1.4vw}
+.card h3{font-size:clamp(1rem,1.6vw,1.25rem);margin-bottom:1vh;font-weight:800}
+.card p{color:#fff;font-size:clamp(.85rem,1.4vw,1.05rem)}
+.dark{background:linear-gradient(135deg,var(--g),var(--g3))}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:2vw;text-align:center;margin:2vh 0}
+.cols p{border-left:4px solid var(--g3);padding:0 1vw;font-size:clamp(.85rem,1.4vw,1.05rem)}
+.flow{background:var(--g);color:#fff;text-align:center;padding:1.6vh 2vw;margin:2vh 0;font-weight:800;font-size:clamp(.9rem,1.6vw,1.2rem)}
+.agenda li{list-style:none;margin:0 0 1.4vh;display:flex;gap:1.5vw}
+.agenda b{background:var(--g);color:#fff;padding:.1em .6em;min-width:2.4em;text-align:center}
+.note{color:var(--g);font-weight:800;margin-top:2vh}
+.n{position:absolute;right:2vw;bottom:2vh;font-size:.9rem;font-weight:400}
+nav{position:fixed;bottom:1.5vh;left:50%;transform:translateX(-50%);display:flex;gap:.6rem;z-index:9}
+nav button{background:var(--g);color:#fff;border:0;border-radius:8px;padding:.5em 1.1em;font:inherit;cursor:pointer}
+nav button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media(max-width:700px){.cols{grid-template-columns:1fr}.slide{padding-left:9vw}}
+</style>
+</head>
+<body>
+<main id="deck">
+
+<section class="slide on">
+<h1>Interrupción de la sesión en una cirugía robótica a distancia</h1>
+<span class="tag">Modelo OSI · Capa 5: Sesión</span>
+<div class="meta">
+<p><b>Curso:</b> Administración de Redes</p>
+<p><b>Docente:</b> Ing. Melgarejo Bolívar Romel Percy</p>
+<p><b>Integrantes:</b></p>
+<ul><li style="font-weight:400">Cristian Joel Curmilluni Ancco</li><li style="font-weight:400">Alexis Antony Tique Ascencio</li></ul>
+</div><span class="n">1</span>
+</section>
+
+<section class="slide">
+<h2>Agenda</h2>
+<ul class="agenda">
+<li><b>01</b> Contexto: la telecirugía</li>
+<li><b>02</b> Capa 5 del modelo OSI</li>
+<li><b>03</b> Sistema elegido</li>
+<li><b>04</b> El problema</li>
+<li><b>05</b> Causas y consecuencias</li>
+<li><b>06</b> Solución propuesta</li>
+</ul><span class="n">2</span>
+</section>
+
+<section class="slide">
+<div class="band"><h2>¿Qué es la telecirugía?</h2></div>
+<p style="text-align:center">La cirugía robótica a distancia permite que un cirujano opere a un paciente ubicado en otra ciudad o país, controlando un robot quirúrgico mediante una red de comunicaciones.</p>
+<div class="cols">
+<p>El cirujano trabaja desde una consola remota con control háptico.</p>
+<p>El robot ejecuta los movimientos en tiempo real sobre el paciente.</p>
+<p>Requiere una sesión de comunicación estable, continua y sincronizada.</p>
+</div>
+<p style="text-align:center">Todo el sistema depende de que la sesión entre ambos extremos se mantenga activa.</p>
+<span class="n">3</span>
+</section>
+
+<section class="slide">
+<h2>Capa 5: Capa de Sesión</h2>
+<p>Abre, mantiene, sincroniza y cierra la comunicación entre dos aplicaciones que intercambian datos de forma continua.</p>
+<ul style="margin-top:2vh">
+<li>Establecimiento: crea y autentica la sesión entre la consola y el robot.</li>
+<li>Sincronización: inserta puntos de control (checkpoints) para reanudar sin perder datos.</li>
+<li>Mantenimiento: vigila que la sesión siga activa mediante señales keep-alive.</li>
+<li>Control del diálogo: define quién puede enviar en cada momento.</li>
+<li>Cierre / recuperación: termina la sesión ordenadamente o la restablece tras un corte.</li>
+</ul><span class="n">4</span>
+</section>
+
+<section class="slide">
+<h2>Sistema elegido: cirugía robótica a distancia</h2>
+<h3 style="color:var(--g2)">Consola del cirujano</h3><p>Envía comandos y recibe video y retroalimentación háptica en tiempo real.</p>
+<h3 style="color:var(--g2);margin-top:2vh">Robot quirúrgico</h3><p>Ejecuta los movimientos y envía telemetría continua.</p>
+<h3 style="color:var(--g2);margin-top:2vh">Sesión entre ambos</h3><p>Es la conexión lógica que la Capa 5 abre y mantiene durante toda la operación.</p>
+<h3 style="color:var(--g2);margin-top:2vh">Requisito crítico</h3><p>La sesión no puede interrumpirse, porque un corte pone en riesgo al paciente.</p>
+<span class="n">5</span>
+</section>
+
+<section class="slide">
+<h2>Arquitectura de la comunicación</h2>
+<div class="flow">Consola del cirujano → Capa de Sesión (5) → Robot quirúrgico</div>
+<p>El cirujano y el robot no se comunican directamente: dependen de una sesión lógica, gestionada por la Capa 5, que mantiene sincronizados los comandos, el video y la retroalimentación háptica.</p>
+<p style="margin-top:2vh">Si la sesión se pierde, el cirujano pierde el control del robot en tiempo real.</p>
+<span class="n">6</span>
+</section>
+
+<section class="slide">
+<h2>El problema planteado</h2>
+<p style="color:var(--g)">Interrupción de la sesión en una cirugía robótica a distancia</p>
+<p style="margin-top:2vh">Durante la operación, la sesión activa entre el cirujano y el sistema robótico se corta de forma inesperada. El robot queda sin instrucciones válidas y se interrumpe el intercambio de comandos, video y retroalimentación háptica en el momento más crítico.</p>
+<p class="note">Alcance del análisis: el corte puede originarse en capas inferiores, pero esta exposición explica únicamente lo que ocurre en la Capa 5.</p>
+<span class="n">7</span>
+</section>
+
+<section class="slide">
+<h2>¿Qué ocurre en la Capa 5 cuando se interrumpe la sesión?</h2>
+<ol>
+<li>Sesión activa: cirujano y robot intercambian comandos y la capa inserta checkpoints periódicos.</li>
+<li>Dejan de llegar datos a la capa: la falla viene desde abajo y la sesión queda sin tráfico.</li>
+<li>Los keep-alive no reciben respuesta: la capa detecta que el otro extremo no contesta.</li>
+<li>Se agota el timeout: la Capa 5 marca la sesión como caída.</li>
+<li>Se pierde el contexto del diálogo: no se sabe cuál fue el último comando confirmado ni quién controla.</li>
+<li>Intento de recuperación: la capa busca reanudar desde el último checkpoint. Si no puede, cierra la sesión y avisa a la aplicación para que active la parada segura del robot.</li>
+</ol><span class="n">8</span>
+</section>
+
+<section class="slide">
+<div class="band"><h2>Cómo se manifiesta la falla en la Capa 5</h2></div>
+<div class="grid">
+<div class="card"><h3>Keep-alive sin respuesta</h3><p>No llega confirmación del otro extremo dentro del tiempo permitido.</p></div>
+<div class="card"><h3>Timeout de sesión</h3><p>El temporizador se agota y la sesión se declara caída.</p></div>
+<div class="card"><h3>Pérdida del punto de sincronización</h3><p>No se sabe cuál fue el último comando confirmado.</p></div>
+<div class="card"><h3>Pérdida del control del diálogo</h3><p>Se pierde quién tiene el permiso de enviar comandos (cirujano o robot).</p></div>
+<div class="card"><h3>Sesión expirada</h3><p>Las credenciales o el token de la sesión dejan de ser válidos.</p></div>
+</div><span class="n">9</span>
+</section>
+
+<section class="slide">
+<div class="band"><h2>Consecuencias de la sesión interrumpida</h2></div>
+<ol>
+<li>El robot puede quedar en una posición insegura o sin respuesta ante el paciente.</li>
+<li>El cirujano pierde la retroalimentación háptica y visual del procedimiento.</li>
+<li>Se requiere intervención manual de emergencia del equipo presente en sala.</li>
+<li>Aumenta el tiempo de la cirugía y el riesgo clínico para el paciente.</li>
+</ol>
+<p class="note">Mayor riesgo: pérdida de control en tiempo real sobre el robot quirúrgico.</p>
+<span class="n">10</span>
+</section>
+
+<section class="slide">
+<div class="band"><h2>Mecanismos de la Capa 5 implicados</h2></div>
+<div class="grid">
+<div class="card dark"><h3>Señales keep-alive</h3><p>Mensajes periódicos que confirman que la sesión sigue activa.</p></div>
+<div class="card dark"><h3>Checkpoints de estado</h3><p>Guardan el progreso para reanudar sin perder sincronización.</p></div>
+<div class="card dark"><h3>Reanudación de sesión</h3><p>Restablece la conexión reutilizando el contexto ya autenticado.</p></div>
+<div class="card dark"><h3>Control de timeout</h3><p>Define cuánto tiempo se tolera sin respuesta antes de declarar la sesión caída.</p></div>
+<div class="card dark"><h3>Control del diálogo</h3><p>Establece quién controla el robot y cómo se transfiere el control.</p></div>
+</div><span class="n">11</span>
+</section>
+
+<section class="slide">
+<h2>Solución desde la Capa 5</h2>
+<ul>
+<li>Checkpoints frecuentes: reducen cuánto se pierde al reanudar.</li>
+<li>Keep-alive con timeout bien ajustado: detecta el corte rápido, sin falsos cortes por retardos normales.</li>
+<li>Reanudación desde el último checkpoint: evita reiniciar todo el procedimiento.</li>
+<li>Renovación anticipada de credenciales: la sesión no expira en pleno procedimiento.</li>
+<li>Control de diálogo definido: queda claro quién controla el robot y cómo se transfiere el control ante un fallo.</li>
+<li>Aviso inmediato a la aplicación: la Capa 5 notifica la caída para que el sistema active la parada segura del robot.</li>
+</ul><span class="n">12</span>
+</section>
+
+<section class="slide">
+<h2 style="text-transform:uppercase">Conclusiones</h2>
+<ul>
+<li>La Capa 5 mantiene coordinados en el tiempo al cirujano y al robot.</li>
+<li>Una interrupción de sesión en telecirugía no es un simple corte de red: es un riesgo clínico directo.</li>
+<li>Desde la Capa 5, la solución exige checkpoints, timeouts bien ajustados y reanudación rápida de la sesión.</li>
+<li>Diseñar esta capa con rigor es tan importante como el propio hardware quirúrgico.</li>
+</ul>
+<p class="note">La sesión es el hilo invisible que sostiene la cirugía remota.</p>
+<span class="n">13</span>
+</section>
+
+<section class="slide">
+<h2 style="text-transform:uppercase">Bibliografía</h2>
+<ul>
+<li>Tanenbaum, A. &amp; Wetherall, D. (2011). Redes de computadoras (5.ª ed.). Pearson.</li>
+<li>Kurose, J. &amp; Ross, K. (2017). Redes de computadoras: un enfoque descendente (7.ª ed.). Pearson.</li>
+<li>Stallings, W. (2015). Data and Computer Communications (10.ª ed.). Pearson.</li>
+<li>ISO/IEC 7498-1 (1994). Information technology – Open Systems Interconnection – Basic Reference Model.</li>
+<li>Intuitive Surgical. Documentación técnica de sistemas quirúrgicos robóticos (da Vinci).</li>
+</ul><span class="n">14</span>
+</section>
+
+</main>
+<nav><button id="prev" aria-label="Anterior">◀ Anterior</button><button id="next" aria-label="Siguiente">Siguiente ▶</button></nav>
+<script>
+const s=[...document.querySelectorAll('.slide')];let i=0;
+function go(n){i=Math.max(0,Math.min(s.length-1,n));s.forEach((e,k)=>e.classList.toggle('on',k===i));location.hash=i+1}
+document.getElementById('prev').onclick=()=>go(i-1);
+document.getElementById('next').onclick=()=>go(i+1);
+addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(i+1)}if(['ArrowLeft','PageUp'].includes(e.key))go(i-1)});
+go((parseInt(location.hash.slice(1))||1)-1);
+</script>
+</body>
+</html>
